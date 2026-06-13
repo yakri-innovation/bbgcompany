@@ -1,0 +1,288 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CLIENT
+  ADVISOR
+  MANAGER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum AccountStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+}
+
+enum LeadType {
+  GESTION_RH
+  GESTION_COMPTA
+  CREATION
+  REPRISE
+  ANNONCE
+  CONTACT
+}
+
+enum LeadStatus {
+  NEW
+  QUALIFIED
+  CONVERTED
+  ARCHIVED
+}
+
+enum DossierType {
+  GESTION_RH
+  GESTION_COMPTA
+  CREATION
+  REPRISE
+  FUSION_ACQUISITION
+  ANNONCE
+  OTHER
+}
+
+enum DossierStatus {
+  NEW
+  WAITING_VALIDATION
+  IN_PROGRESS
+  DOCUMENT_REQUESTED
+  DOCUMENT_RECEIVED
+  PAYMENT_REQUESTED
+  PROCESSING
+  COMPLETED
+  ARCHIVED
+  CANCELLED
+}
+
+enum StepStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  BLOCKED
+}
+
+enum DocumentStatus {
+  REQUESTED
+  UPLOADED
+  REVIEWING
+  VALIDATED
+  REJECTED
+  EXPIRED
+  AVAILABLE
+}
+
+enum PaymentStatus {
+  DRAFT
+  REQUESTED
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum AnnouncementCategory {
+  COMMERCIAL_COMPANY
+  BUSINESS_ASSET
+  REAL_ESTATE_COMPANY
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum NotificationChannel {
+  APP
+  EMAIL
+  WHATSAPP
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  READ
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  email              String         @unique
+  passwordHash       String?
+  role               UserRole       @default(CLIENT)
+  status             AccountStatus  @default(INVITED)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  lastLoginAt        DateTime?
+  clientProfile      ClientProfile?
+  assignedLeads      Lead[]         @relation("AssignedLeads")
+  advisedDossiers    Dossier[]      @relation("AdvisorDossiers")
+  uploadedDocuments  Document[]     @relation("UploadedDocuments")
+  validatedDocuments Document[]     @relation("ValidatedDocuments")
+  notifications      Notification[]
+  auditLogs          AuditLog[]     @relation("AuditActor")
+}
+
+model ClientProfile {
+  id                     String     @id @default(uuid())
+  userId                 String     @unique
+  firstName              String
+  lastName               String
+  phone                  String?
+  whatsapp               String?
+  companyName            String?
+  preferredContactMethod String?
+  address                String?
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
+  user                   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  leads                  Lead[]
+  dossiers               Dossier[]
+  documents              Document[]
+  payments               Payment[]
+}
+
+model Lead {
+  id           String         @id @default(uuid())
+  type         LeadType
+  source       String?
+  firstName    String?
+  lastName     String?
+  email        String?
+  phone        String?
+  payload      Json
+  status       LeadStatus     @default(NEW)
+  clientId     String?
+  assignedToId String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  client       ClientProfile? @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  assignedTo   User?          @relation("AssignedLeads", fields: [assignedToId], references: [id], onDelete: SetNull)
+  dossiers     Dossier[]
+}
+
+model Dossier {
+  id            String         @id @default(uuid())
+  clientId      String
+  leadId        String?
+  advisorId     String?
+  type          DossierType
+  title         String
+  status        DossierStatus  @default(NEW)
+  currentStep   Int            @default(1)
+  priority      Int            @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  closedAt      DateTime?
+  client        ClientProfile  @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  lead          Lead?          @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  advisor       User?          @relation("AdvisorDossiers", fields: [advisorId], references: [id], onDelete: SetNull)
+  steps         DossierStep[]
+  documents     Document[]
+  payments      Payment[]
+  notifications Notification[]
+}
+
+model DossierStep {
+  id          String     @id @default(uuid())
+  dossierId   String
+  title       String
+  description String?
+  order       Int
+  status      StepStatus @default(PENDING)
+  dueDate     DateTime?
+  completedAt DateTime?
+  dossier     Dossier    @relation(fields: [dossierId], references: [id], onDelete: Cascade)
+
+  @@unique([dossierId, order])
+}
+
+model Document {
+  id              String         @id @default(uuid())
+  dossierId       String
+  clientId        String
+  type            String
+  title           String
+  fileKey         String?
+  fileName        String?
+  mimeType        String?
+  size            Int?
+  status          DocumentStatus @default(REQUESTED)
+  rejectionReason String?
+  version         Int            @default(1)
+  uploadedById    String?
+  validatedById   String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  dossier         Dossier        @relation(fields: [dossierId], references: [id], onDelete: Cascade)
+  client          ClientProfile  @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  uploadedBy      User?          @relation("UploadedDocuments", fields: [uploadedById], references: [id], onDelete: SetNull)
+  validatedBy     User?          @relation("ValidatedDocuments", fields: [validatedById], references: [id], onDelete: SetNull)
+}
+
+model Payment {
+  id                String        @id @default(uuid())
+  dossierId         String
+  clientId          String
+  label             String
+  amount            Int
+  currency          String        @default("EUR")
+  status            PaymentStatus @default(DRAFT)
+  provider          String?
+  providerSessionId String?
+  providerPaymentId String?
+  invoiceUrl        String?
+  createdAt         DateTime      @default(now())
+  paidAt            DateTime?
+  dossier           Dossier       @relation(fields: [dossierId], references: [id], onDelete: Cascade)
+  client            ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+model Announcement {
+  id          String               @id @default(uuid())
+  title       String
+  slug        String               @unique
+  category    AnnouncementCategory
+  city        String?
+  price       String?
+  priceBand   String?
+  description String
+  details     Json?
+  status      PublishStatus        @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model Notification {
+  id        String              @id @default(uuid())
+  userId    String
+  dossierId String?
+  type      String
+  title     String
+  message   String
+  channel   NotificationChannel @default(APP)
+  status    NotificationStatus  @default(PENDING)
+  readAt    DateTime?
+  createdAt DateTime            @default(now())
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dossier   Dossier?            @relation(fields: [dossierId], references: [id], onDelete: SetNull)
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String?
+  entityType String
+  entityId   String
+  action     String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  actor      User?    @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+}

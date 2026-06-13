@@ -1,0 +1,30 @@
+{
+  "name": "bbg-company-next",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "db:push": "prisma db push",
+    "db:seed": "node prisma/seed.js",
+    "db:seed:announcements": "node prisma/seed-announcements.js",
+    "db:seed:mvp": "node prisma/seed-mvp.js",
+    "test:e2e:payments": "node scripts/e2e-payments.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^3.0.3",
+    "next": "14.2.5",
+    "next-auth": "^4.24.11",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

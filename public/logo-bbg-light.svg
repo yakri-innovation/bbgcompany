@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" fill="none">
+  <rect width="300" height="200" rx="0" fill="transparent"/>
+  <!-- Letter B -->
+  <text x="72" y="115" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="400" fill="#6B5B4F" letter-spacing="2">B</text>
+  <!-- Separator 1 -->
+  <line x1="112" y1="72" x2="112" y2="130" stroke="#6B5B4F" stroke-width="1" opacity="0.4"/>
+  <!-- Letter B -->
+  <text x="122" y="115" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="400" fill="#6B5B4F" letter-spacing="2">B</text>
+  <!-- Separator 2 -->
+  <line x1="162" y1="72" x2="162" y2="130" stroke="#6B5B4F" stroke-width="1" opacity="0.4"/>
+  <!-- Letter G -->
+  <text x="172" y="115" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="400" fill="#6B5B4F" letter-spacing="2">G</text>
+  <!-- COMPANY text -->
+  <text x="150" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#6B5B4F" letter-spacing="8" text-anchor="middle" opacity="0.7">COMPANY</text>
+</svg>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BBG Company - Espace client</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="light-page">
+    <header class="topbar">
+      <div class="container nav">
+        <a class="brand" href="index.html">
+          <div class="brand-mark">BBG</div>
+          <div class="brand-text">
+            <strong>BBG Company</strong>
+            <span>Espace client sécurisé</span>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html#services">Services</a>
+          <a href="index.html#annonces">Annonces</a>
+          <a href="#documents">Documents</a>
+          <a href="#paiements">Paiements</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-secondary" href="index.html">Retour au site</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-shell">
+      <div class="container dashboard-grid">
+        <section class="dashboard-main">
+          <div class="dashboard-banner">
+            <div class="dashboard-head">
+              <div>
+                <span class="mini-chip">Dossier actif</span>
+                <h1>Bonjour Sarah, votre création avance.</h1>
+                <p>
+                  Retrouvez l'avancement de vos démarches, les documents à déposer et les actions à finaliser depuis votre tableau de bord.
+                </p>
+              </div>
+              <a class="btn btn-secondary" href="#documents">Voir mes documents</a>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <span class="tag">Alerte</span>
+              <strong>3 documents</strong>
+              <p>Restent à signer pour finaliser l'immatriculation de CARWASH.</p>
+            </article>
+            <article class="metric-card">
+              <span class="tag">Création</span>
+              <strong>Étape 2 / 3</strong>
+              <p>Le dossier est en cours de traitement par votre conseiller.</p>
+            </article>
+            <article class="metric-card">
+              <span class="tag">Paiement</span>
+              <strong>1 échéance</strong>
+              <p>Une échéance partenaire est disponible pour validation.</p>
+            </article>
+          </div>
+
+          <article class="dashboard-card">
+            <div class="dashboard-head">
+              <div>
+                <h3>Mes dossiers</h3>
+                <p>Une vue centralisée de tous vos accompagnements en cours.</p>
+              </div>
+              <span class="status-pill">Suivi en temps réel</span>
+            </div>
+
+            <!-- Timeline Création -->
+            <div class="dossier-timeline">
+              <div class="dossier-timeline-header">
+                <div>
+                  <strong>Création — CARWASH</strong>
+                  <p>Immatriculation de société en cours</p>
+                </div>
+                <span class="status-pill">Actif</span>
+              </div>
+              <div class="timeline-steps">
+                <div class="timeline-step-item done">
+                  <div class="step-dot">1</div>
+                  <div class="step-content">
+                    <strong>Projet et informations</strong>
+                    <p>Choix du projet, nom, forme juridique</p>
+                  </div>
+                </div>
+                <div class="timeline-step-item active">
+                  <div class="step-dot">2</div>
+                  <div class="step-content">
+                    <strong>Actionnaires et dirigeants</strong>
+                    <p>Informations des associés en cours de traitement</p>
+                  </div>
+                </div>
+                <div class="timeline-step-item pending">
+                  <div class="step-dot">3</div>
+                  <div class="step-content">
+                    <strong>Finalisation</strong>
+                    <p>Immatriculation et documents définitifs</p>
+                  </div>
+                </div>
+              </div>
+              <div class="dossier-actions">
+                <button class="btn btn-primary">Continuer l'étape 2</button>
+                <button class="btn btn-outline">Voir le détail</button>
+              </div>
+            </div>
+
+            <div class="table-like" style="margin-top: 20px;">
+              <div class="table-row">
+                <div>
+                  <strong>Gestion</strong>
+                  <p>Pas de démarches en cours</p>
+                </div>
+                <div><span class="tag">Inactif</span></div>
+                <div>—</div>
+                <button class="btn btn-outline">Créer une demande</button>
+              </div>
+              <div class="table-row">
+                <div>
+                  <strong>Acquisition / Fusion</strong>
+                  <p>Pas d'achat de société en cours</p>
+                </div>
+                <div><span class="tag">Inactif</span></div>
+                <div>—</div>
+                <button class="btn btn-outline">Explorer les annonces</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card" id="documents">
+            <div class="dashboard-head">
+              <div>
+                <h3>Mes documents</h3>
+                <p>Dépôt sécurisé et accès conditionné selon le statut du dossier.</p>
+              </div>
+              <a class="btn btn-outline" href="#paiements">Voir les paiements</a>
+            </div>
+            <div class="documents-grid">
+              <div class="document-card upload-box">
+                <strong>Pièce d'identité</strong>
+                <p>Ajoutez un fichier conforme et certifiez qu'il correspond à l'original.</p>
+                <button class="btn btn-primary">Parcourir</button>
+              </div>
+              <div class="document-card upload-box">
+                <strong>Justificatif de domicile</strong>
+                <p>Formats recommandés : PDF, JPG, PNG. Validation sous 1 heure ouvrée.</p>
+                <button class="btn btn-primary">Parcourir</button>
+              </div>
+              <div class="document-card">
+                <strong>Statuts & mandats</strong>
+                <p>Téléchargement disponible après paiement et validation de signature.</p>
+                <button class="btn btn-outline">Envoyer un code</button>
+              </div>
+            </div>
+            <div class="table-like" style="margin-top: 20px;">
+              <div class="table-row">
+                <div>
+                  <strong>Statuts</strong>
+                  <p>Prêts à télécharger après signature</p>
+                </div>
+                <div><span class="tag">En attente</span></div>
+                <div>Version 2</div>
+                <button class="btn btn-outline">Télécharger</button>
+              </div>
+              <div class="table-row">
+                <div>
+                  <strong>Liste des souscripteurs</strong>
+                  <p>Document généré automatiquement</p>
+                </div>
+                <div><span class="status-pill">Disponible</span></div>
+                <div>PDF</div>
+                <button class="btn btn-outline">Télécharger</button>
+              </div>
+              <div class="table-row">
+                <div>
+                  <strong>KBIS</strong>
+                  <p>Sera ajouté dès publication officielle</p>
+                </div>
+                <div><span class="tag">À venir</span></div>
+                <div>—</div>
+                <button class="btn btn-outline">Être notifié</button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <aside class="dashboard-side">
+          <article class="dashboard-card">
+            <h3>Mon conseiller</h3>
+            <p>Votre interlocuteur dédié pour le suivi de vos démarches.</p>
+            <div class="panel">
+              <strong>Benoit DUPONT</strong>
+              <p>01.02.03.04.05<br />benoit.dupont@bbg-company.fr</p>
+              <div class="inline-actions">
+                <a class="btn btn-primary" href="mailto:benoit.dupont@bbg-company.fr">Envoyer un mail</a>
+                <a class="btn btn-outline" href="tel:0102030405">Appeler</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card">
+            <h3>Mon profil</h3>
+            <div class="table-like">
+              <div class="table-row">
+                <div>
+                  <strong>Nom</strong>
+                  <p>Diallo</p>
+                </div>
+                <div><strong>Prénom</strong><p>Sarah</p></div>
+                <div><strong>Identifiant</strong><p>BBG-CLIENT-2048</p></div>
+                <button class="btn btn-outline">Modifier</button>
+              </div>
+              <div class="table-row">
+                <div>
+                  <strong>Email</strong>
+                  <p>sarah@example.com</p>
+                </div>
+                <div><strong>Téléphone</strong><p>06 11 22 33 44</p></div>
+                <div><strong>Mot de passe</strong><p>••••••••••</p></div>
+                <button class="btn btn-outline">Sécuriser</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card" id="paiements">
+            <h3>Mes paiements</h3>
+            <div class="table-like">
+              <div class="table-row">
+                <div>
+                  <strong>Accompagnement création</strong>
+                  <p>Règlement principal</p>
+                </div>
+                <div><span class="status-pill">Payé</span></div>
+                <div>1 200 €</div>
+                <button class="btn btn-outline">Facture</button>
+              </div>
+              <div class="table-row">
+                <div>
+                  <strong>Partenaire domiciliation</strong>
+                  <p>Offre 12 mois</p>
+                </div>
+                <div><span class="tag">En attente</span></div>
+                <div>99 €/mois</div>
+                <button class="btn btn-primary">Régler</button>
+              </div>
+            </div>
+          </article>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>
