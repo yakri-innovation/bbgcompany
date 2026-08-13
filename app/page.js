@@ -10,17 +10,26 @@ import AnnonceSection from "@/components/AnnonceSection";
 import PlatformSection from "@/components/PlatformSection";
 import ContactSection from "@/components/ContactSection";
 import { groupAnnouncementsForPublic } from "@/lib/announcements";
-import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 async function getPublicAnnouncements() {
-  const announcements = await prisma.announcement.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }]
-  });
+  if (process.env.DISABLE_PUBLIC_ANNOUNCEMENTS === "1") {
+    return groupAnnouncementsForPublic([]);
+  }
+  try {
+    const { prisma } = await import("@/lib/prisma");
 
-  return groupAnnouncementsForPublic(announcements);
+    const announcements = await prisma.announcement.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }]
+    });
+
+    return groupAnnouncementsForPublic(announcements);
+  } catch (error) {
+    console.warn("[HomePage] Failed to load public announcements", error);
+    return groupAnnouncementsForPublic([]);
+  }
 }
 
 export default async function HomePage() {
