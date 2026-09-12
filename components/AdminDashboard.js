@@ -42,7 +42,7 @@ const paymentStatusLabels = {
   CANCELLED: "Annulé"
 };
 
-const chartPalette = ["#6b5b4f", "#c9a96e", "#166534", "#b45309", "#1d4ed8", "#b00020", "#0f766e"];
+const chartPalette = ["#554035", "#c9a96e", "#166534", "#b45309", "#1d4ed8", "#b00020", "#0f766e"];
 
 function formatDate(value) {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -120,9 +120,9 @@ function LineChart({ data, width = 460, height = 170 }) {
         </linearGradient>
       </defs>
       <path d={areaPath} fill="url(#lineFill)" stroke="none" />
-      <path d={linePath} fill="none" stroke="#6b5b4f" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={linePath} fill="none" stroke="#554035" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       {points.map((point) => (
-        <circle key={point.label} cx={point.x} cy={point.y} r="3" fill="#6b5b4f" />
+        <circle key={point.label} cx={point.x} cy={point.y} r="3" fill="#554035" />
       ))}
     </svg>
   );
@@ -138,7 +138,7 @@ function DonutChart({ data, size = 168, thickness = 26 }) {
     <div className="chart-donut-wrap">
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Répartition par statut">
         <g transform={`rotate(-90 ${size / 2} ${size / 2})`}>
-          <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#ece7e1" strokeWidth={thickness} />
+          <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#F5EEE4" strokeWidth={thickness} />
           {total > 0 &&
             data.map((item, index) => {
               const fraction = item.value / total;

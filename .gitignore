@@ -11,3 +11,4 @@ dist/
 .netlify/
 .DS_Store
 Thumbs.db
+.prod-config-backups/

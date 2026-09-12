@@ -35,11 +35,7 @@ export default function SiteFooter() {
         <div className="footer-card">
           <h4>Contact rapide</h4>
           <p>
-            RH@bbg-company.fr
-            <br />
-            compta@bbg-company.fr
-            <br />
-            annonces@bbg-company.fr
+            commercial@bbg-company.fr
           </p>
         </div>
       </div>

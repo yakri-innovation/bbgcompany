@@ -28,7 +28,6 @@ export default function ServiceCards({ compact = false }) {
   return (
     <section className={sectionClassName} id="services">
       <div className="container">
-        <h2 className="section-title" style={{ textAlign: "center" }}>Nos services</h2>
         <div className="service-grid">
           {services.map((service) => (
             <a className={`service-card service-card-visual ${compact ? "service-card-compact" : ""}`} key={service.title} href={service.href}>
@@ -36,7 +35,6 @@ export default function ServiceCards({ compact = false }) {
                 <img className="service-photo" src={service.image} alt={service.title} />
                 <div className="service-photo-overlay" />
                 <div className="service-card-content">
-                  <span className="service-kicker">BBG Company</span>
                   <h3>{service.title}</h3>
                   <span className="service-subtitle">{service.subtitle}</span>
                   <div className="service-card-footer">

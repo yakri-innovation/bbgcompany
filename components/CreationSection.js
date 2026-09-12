@@ -179,6 +179,13 @@ export default function CreationSection() {
   const currentStep = Math.min(completedSteps + 1, TOTAL_CREATION_STEPS);
   const progressPercent = Math.round((completedSteps / TOTAL_CREATION_STEPS) * 100);
 
+  const getRequiredDocuments = () => {
+    const documents = [];
+    if (hasSiege === "oui") documents.push("Contrat de domiciliation");
+    if (capitalPartner === "non") documents.push("Attestation de dépôt de capital");
+    return documents;
+  };
+
   const buildRecapPayload = () => ({
     projectType,
     companyName,
@@ -207,7 +214,8 @@ export default function CreationSection() {
     particularitesDetail,
     immatriculationService,
     clientEmail,
-    clientPhone
+    clientPhone,
+    requiredDocuments: getRequiredDocuments()
   });
 
   const applyDraft = (draft) => {
@@ -480,12 +488,20 @@ export default function CreationSection() {
       });
     }
 
+    if (Array.isArray(payload.requiredDocuments) && payload.requiredDocuments.length > 0) {
+      addDivider();
+      addSectionTitle("4. Documents a fournir");
+      payload.requiredDocuments.forEach((doc) => {
+        addField("-", doc);
+      });
+    }
+
     if (y < 190) {
       y = 190;
     }
 
     moveDown(6);
-    addSectionTitle("4. Validation du dossier");
+    addSectionTitle("5. Validation du dossier");
 
     const tableX = 40;
     const tableY = y;
@@ -708,7 +724,7 @@ export default function CreationSection() {
   return (
     <section className="section section-dark" id="creation">
       <div className="container">
-        <span className="kicker">Service 2</span>
+        <span className="kicker">Création</span>
         <h2 className="section-title">Créer votre société avec un parcours clair, premium et structuré.</h2>
         <p className="section-copy">
           Ce formulaire dynamique multi-étapes simplifie la collecte d'informations et alimente directement votre espace client pour le suivi de votre dossier.
@@ -1021,9 +1037,14 @@ export default function CreationSection() {
                 </button>
               </div>
               {hasSiege === "oui" && (
-                <div className="subsection field question-field-single">
-                  <label>Indiquez l'adresse précise</label>
-                  <input type="text" placeholder="Adresse du siège social" value={siegeAddress} onChange={(event) => setSiegeAddress(event.target.value)} />
+                <div className="subsection">
+                  <div className="field question-field-single">
+                    <label>Indiquez l'adresse précise</label>
+                    <input type="text" placeholder="Adresse du siège social" value={siegeAddress} onChange={(event) => setSiegeAddress(event.target.value)} />
+                  </div>
+                  <div className="notice" style={{ marginTop: 12 }}>
+                    Un <strong>contrat de domiciliation</strong> sera demandé parmi les documents à fournir pour votre dossier.
+                  </div>
                 </div>
               )}
               {hasSiege === "non" && (
@@ -1062,6 +1083,9 @@ export default function CreationSection() {
                   </div>
                 </div>
               </div>
+              {capitalPartner === "oui" && (
+                <div className="subsection notice">Une proposition vous sera envoyée par notre partenaire.</div>
+              )}
               {capitalPartner === "non" && (
                 <div className="subsection notice">Il vous sera demandé de fournir l'attestation de dépôt de capital.</div>
               )}
@@ -1097,6 +1121,16 @@ export default function CreationSection() {
                       Impôt sur le revenu
                     </button>
                   </div>
+                  {fiscaliteChoice === "Impôt sur les sociétés" && (
+                    <div className="notice" style={{ marginTop: 12 }}>
+                      <strong>Impôt sur les sociétés (IS) :</strong> La société est imposée directement sur ses bénéfices à un taux fixe (15 % jusqu'à 42 500 € de bénéfice, puis 25 % au-delà). Les dirigeants ne sont imposés personnellement que sur les rémunérations et dividendes qu'ils perçoivent. Ce régime permet de maîtriser la fiscalité en séparant clairement le patrimoine de la société et celui des associés.
+                    </div>
+                  )}
+                  {fiscaliteChoice === "Impôt sur le revenu" && (
+                    <div className="notice" style={{ marginTop: 12 }}>
+                      <strong>Impôt sur le revenu (IR) :</strong> Les bénéfices de la société sont directement intégrés aux revenus personnels de chaque associé, proportionnellement à leur participation. L'imposition suit le barème progressif de l'impôt sur le revenu (de 0 % à 45 %). Ce régime est avantageux lorsque les bénéfices sont faibles ou que les associés disposent de déficits reportables, mais il peut entraîner une imposition plus élevée en cas de revenus importants.
+                    </div>
+                  )}
                 </div>
               )}
             </article>
@@ -1105,7 +1139,7 @@ export default function CreationSection() {
           {(fiscaliteChoice || fiscaliteDetail) && (
             <article className="form-card question-card" ref={stepTvaRef} data-validation-step="9">
               <div className="question-step">Étape 9</div>
-              <h3>Souhaitez-vous être en franchise de TVA ?</h3>
+              <h3>Savez-vous quel régime de TVA vous souhaitez mettre en place pour votre société ?</h3>
               <div className="choice-group question-choices">
                 <button className={`choice-pill ${tva === "oui" ? "selected" : ""}`} onClick={() => setTva("oui")}>
                   Oui
@@ -1190,6 +1224,16 @@ export default function CreationSection() {
                   <input type="tel" placeholder="06 00 00 00 00" value={clientPhone} onChange={(event) => setClientPhone(event.target.value)} />
                 </div>
               </div>
+              {getRequiredDocuments().length > 0 && (
+                <div className="subsection notice">
+                  <strong>Documents à fournir :</strong>
+                  <ul style={{ margin: "8px 0 0", paddingLeft: 20 }}>
+                    {getRequiredDocuments().map((doc) => (
+                      <li key={doc}>{doc}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {validationErrors.step12 && <div className="subsection notice">{validationErrors.step12}</div>}
               <div className="inline-actions">
                 <button className="btn btn-primary" type="button" onClick={handleLeadSubmit} disabled={isSubmittingLead || isValidatingLead || isLeadSubmitted}>

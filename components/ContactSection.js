@@ -294,12 +294,9 @@ export default function ContactSection() {
         <h2 className="section-title" style={{ textAlign: "center" }}>Contactez-nous</h2>
         <div className="contact-grid">
           <article className="contact-card">
-            <h3>Coordonnées directes</h3>
+            <h3>Nous écrire</h3>
             <ul className="list-clean">
-              <li>RH : RH@bbg-company.fr</li>
-              <li>Comptabilité : compta@bbg-company.fr</li>
-              <li>Annonces : annonces@bbg-company.fr</li>
-              <li>Téléphone : 01.02.03.04.05</li>
+              <li>commercial@bbg-company.fr</li>
             </ul>
           </article>
           <form className="form-card" onSubmit={handleSubmit}>

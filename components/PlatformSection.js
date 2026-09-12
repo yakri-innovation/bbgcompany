@@ -4,9 +4,9 @@ const platformCards = [
     label: "UX",
     icon: (
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-        <rect width="44" height="44" rx="12" fill="#F3EDE6" />
-        <rect x="10" y="12" width="24" height="6" rx="3" fill="#5A483A" opacity="0.15" />
-        <rect x="10" y="22" width="24" height="6" rx="3" fill="#5A483A" opacity="0.1" />
+        <rect width="44" height="44" rx="12" fill="#F5EEE4" />
+        <rect x="10" y="12" width="24" height="6" rx="3" fill="#554035" opacity="0.15" />
+        <rect x="10" y="22" width="24" height="6" rx="3" fill="#554035" opacity="0.1" />
         <rect x="10" y="32" width="16" height="4" rx="2" fill="#C9A96E" />
       </svg>
     )
@@ -16,9 +16,9 @@ const platformCards = [
     label: "DATA",
     icon: (
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-        <rect width="44" height="44" rx="12" fill="#F3EDE6" />
-        <ellipse cx="22" cy="16" rx="10" ry="4" fill="#5A483A" opacity="0.12" />
-        <ellipse cx="22" cy="22" rx="10" ry="4" fill="#5A483A" opacity="0.08" />
+        <rect width="44" height="44" rx="12" fill="#F5EEE4" />
+        <ellipse cx="22" cy="16" rx="10" ry="4" fill="#554035" opacity="0.12" />
+        <ellipse cx="22" cy="22" rx="10" ry="4" fill="#554035" opacity="0.08" />
         <ellipse cx="22" cy="28" rx="10" ry="4" fill="#C9A96E" opacity="0.25" />
       </svg>
     )
@@ -28,10 +28,10 @@ const platformCards = [
     label: "CRM",
     icon: (
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-        <rect width="44" height="44" rx="12" fill="#F3EDE6" />
-        <rect x="10" y="12" width="24" height="20" rx="3" fill="#5A483A" opacity="0.08" />
+        <rect width="44" height="44" rx="12" fill="#F5EEE4" />
+        <rect x="10" y="12" width="24" height="20" rx="3" fill="#554035" opacity="0.08" />
         <circle cx="22" cy="20" r="4" fill="#C9A96E" opacity="0.3" />
-        <rect x="16" y="28" width="12" height="2" rx="1" fill="#3D2E22" />
+        <rect x="16" y="28" width="12" height="2" rx="1" fill="#3C2B1E" />
       </svg>
     )
   }

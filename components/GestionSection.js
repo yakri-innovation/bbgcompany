@@ -6,11 +6,13 @@ export default function GestionSection() {
   const [service, setService] = useState("");
   const [rhHasEmployees, setRhHasEmployees] = useState("");
   const [rhDomain, setRhDomain] = useState("");
+  const [rhDomainCustom, setRhDomainCustom] = useState("");
   const [rhContact, setRhContact] = useState("");
   const [rhMail, setRhMail] = useState("");
   const [rhWhatsapp, setRhWhatsapp] = useState("");
   const [comptaUpToDate, setComptaUpToDate] = useState("");
   const [comptaDomain, setComptaDomain] = useState("");
+  const [comptaDomainCustom, setComptaDomainCustom] = useState("");
   const [comptaContact, setComptaContact] = useState("");
   const [comptaMail, setComptaMail] = useState("");
   const [comptaWhatsapp, setComptaWhatsapp] = useState("");
@@ -42,11 +44,13 @@ export default function GestionSection() {
     setService(value);
     setRhHasEmployees("");
     setRhDomain("");
+    setRhDomainCustom("");
     setRhContact("");
     setRhMail("");
     setRhWhatsapp("");
     setComptaUpToDate("");
     setComptaDomain("");
+    setComptaDomainCustom("");
     setComptaContact("");
     setComptaMail("");
     setComptaWhatsapp("");
@@ -65,7 +69,8 @@ export default function GestionSection() {
 
   const handleRhDomainChange = (e) => {
     setRhDomain(e.target.value);
-    if (e.target.value) {
+    if (e.target.value !== "Autres") setRhDomainCustom("");
+    if (e.target.value && e.target.value !== "Autres") {
       setTimeout(() => scrollToRef(rhStep3Ref), 150);
     }
   };
@@ -82,7 +87,8 @@ export default function GestionSection() {
 
   const handleComptaDomainChange = (e) => {
     setComptaDomain(e.target.value);
-    if (e.target.value) {
+    if (e.target.value !== "Autres") setComptaDomainCustom("");
+    if (e.target.value && e.target.value !== "Autres") {
       setTimeout(() => scrollToRef(comptaStep3Ref), 150);
     }
   };
@@ -92,11 +98,14 @@ export default function GestionSection() {
     setTimeout(() => scrollToRef(comptaStep4Ref), 150);
   };
 
+  const rhDomainValid = rhDomain && (rhDomain !== "Autres" || rhDomainCustom);
+  const comptaDomainValid = comptaDomain && (comptaDomain !== "Autres" || comptaDomainCustom);
+
   const canSubmitGestion =
     service === "rh"
-      ? rhHasEmployees && rhDomain && rhContact && rhMail && rhWhatsapp
+      ? rhHasEmployees && rhDomainValid && rhContact && rhMail && rhWhatsapp
       : service === "compta"
-        ? comptaUpToDate && comptaDomain && comptaContact && comptaMail && comptaWhatsapp
+        ? comptaUpToDate && comptaDomainValid && comptaContact && comptaMail && comptaWhatsapp
         : false;
 
   const buildRecapPayload = () =>
@@ -104,7 +113,7 @@ export default function GestionSection() {
       ? {
           service: "Gestion RH",
           hasEmployees: rhHasEmployees,
-          domain: rhDomain,
+          domain: rhDomain === "Autres" ? `Autres : ${rhDomainCustom}` : rhDomain,
           contactPreference: rhContact,
           email: rhMail,
           phone: rhWhatsapp
@@ -112,7 +121,7 @@ export default function GestionSection() {
       : {
           service: "Gestion comptable",
           accountingUpToDate: comptaUpToDate,
-          domain: comptaDomain,
+          domain: comptaDomain === "Autres" ? `Autres : ${comptaDomainCustom}` : comptaDomain,
           contactPreference: comptaContact,
           email: comptaMail,
           phone: comptaWhatsapp
@@ -363,7 +372,7 @@ export default function GestionSection() {
         ? {
             service,
             hasEmployees: rhHasEmployees,
-            domain: rhDomain,
+            domain: rhDomain === "Autres" ? `Autres : ${rhDomainCustom}` : rhDomain,
             contactPreference: rhContact,
             email: rhMail,
             whatsapp: rhWhatsapp
@@ -371,7 +380,7 @@ export default function GestionSection() {
         : {
             service,
             accountingUpToDate: comptaUpToDate,
-            domain: comptaDomain,
+            domain: comptaDomain === "Autres" ? `Autres : ${comptaDomainCustom}` : comptaDomain,
             contactPreference: comptaContact,
             email: comptaMail,
             whatsapp: comptaWhatsapp
@@ -405,7 +414,7 @@ export default function GestionSection() {
   return (
     <section className="section" id="gestion">
       <div className="container">
-        <span className="kicker">Service 1</span>
+        <span className="kicker">Gestion</span>
         <h2 className="section-title">Gestion de votre entreprise</h2>
         <p className="section-copy">
           Notre service de gestion vous accompagne dans toutes les étapes administratives de votre entreprise, de la gestion des déclarations sociales à la paie et au soutien comptable.
@@ -459,10 +468,16 @@ export default function GestionSection() {
                       <option value="Autres">Autres</option>
                     </select>
                   </div>
+                  {rhDomain === "Autres" && (
+                    <div className="field question-field-single" style={{ marginTop: 12 }}>
+                      <label>Précisez</label>
+                      <input type="text" placeholder="Votre domaine d'activité" value={rhDomainCustom} onChange={(e) => { setRhDomainCustom(e.target.value); if (e.target.value) setTimeout(() => scrollToRef(rhStep3Ref), 150); }} />
+                    </div>
+                  )}
                 </article>
               )}
 
-              {rhDomain && (
+              {rhDomainValid && (
                 <article className="form-card question-card" ref={rhStep4Ref}>
                   <div className="question-step">Étape 4</div>
                   <h3>Préférez-vous échanger par mail ou téléphone ?</h3>
@@ -489,7 +504,7 @@ export default function GestionSection() {
                     <input type="tel" placeholder="06 00 00 00 00" value={rhWhatsapp} onChange={(event) => setRhWhatsapp(event.target.value)} />
                   </div>
                   <p>
-                    Contactez-nous à <strong>RH@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
+                    Contactez-nous à <strong>commercial@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
                   </p>
                 </article>
               )}
@@ -545,10 +560,16 @@ export default function GestionSection() {
                       <option value="Autres">Autres</option>
                     </select>
                   </div>
+                  {comptaDomain === "Autres" && (
+                    <div className="field question-field-single" style={{ marginTop: 12 }}>
+                      <label>Précisez</label>
+                      <input type="text" placeholder="Votre domaine d'activité" value={comptaDomainCustom} onChange={(e) => { setComptaDomainCustom(e.target.value); if (e.target.value) setTimeout(() => scrollToRef(comptaStep3Ref), 150); }} />
+                    </div>
+                  )}
                 </article>
               )}
 
-              {comptaDomain && (
+              {comptaDomainValid && (
                 <article className="form-card question-card" ref={comptaStep4Ref}>
                   <div className="question-step">Étape 4</div>
                   <h3>Préférez-vous échanger par mail ou téléphone ?</h3>
@@ -575,7 +596,7 @@ export default function GestionSection() {
                     <input type="tel" placeholder="06 00 00 00 00" value={comptaWhatsapp} onChange={(event) => setComptaWhatsapp(event.target.value)} />
                   </div>
                   <p>
-                    Contactez-nous à <strong>compta@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
+                    Contactez-nous à <strong>commercial@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
                   </p>
                 </article>
               )}
@@ -601,7 +622,7 @@ export default function GestionSection() {
 
           <div className="subsection inline-actions">
             <button className="btn btn-primary" type="button" onClick={handleLeadSubmit} disabled={isSubmittingLead || isLeadSubmitted}>
-              {isSubmittingLead ? "Enregistrement..." : isLeadSubmitted ? "Enregistré" : "Être accompagné"}
+              {isSubmittingLead ? "Enregistrement..." : isLeadSubmitted ? "Enregistré" : "Validé"}
             </button>
             {isLeadSubmitted && (
               <button className="btn btn-outline" type="button" onClick={handleDownloadRecap}>

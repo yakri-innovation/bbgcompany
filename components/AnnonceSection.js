@@ -318,7 +318,7 @@ export default function AnnonceSection({ announcements = {} }) {
   return (
     <section className="section" id="annonces">
       <div className="container">
-        <span className="kicker">Service 3</span>
+        <span className="kicker">Fusion / Acquisition</span>
         <h2 className="section-title">Fusion / Acquisition et reprise d'opportunités</h2>
         <p className="section-copy">
           Notre catalogue dynamique d'annonces vous permet de filtrer les opportunités, consulter les fiches détaillées et basculer directement vers le parcours de reprise.
@@ -462,7 +462,7 @@ export default function AnnonceSection({ announcements = {} }) {
                     <input type="tel" placeholder="06 00 00 00 00" value={whatsapp} onChange={(event) => setWhatsapp(event.target.value)} />
                   </div>
                   <p>
-                    Contactez-nous à <strong>annonces@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
+                    Contactez-nous à <strong>commercial@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
                   </p>
                 </div>
               )}
@@ -533,7 +533,7 @@ export default function AnnonceSection({ announcements = {} }) {
                     <input type="tel" placeholder="06 00 00 00 00" value={whatsapp} onChange={(event) => setWhatsapp(event.target.value)} />
                   </div>
                   <p>
-                    Contactez-nous à <strong>annonces@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
+                    Contactez-nous à <strong>commercial@bbg-company.fr</strong> vous recevrez un retour en moins d'une heure.
                   </p>
                 </div>
               )}
